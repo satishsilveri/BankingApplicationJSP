@@ -2,6 +2,8 @@ package utility;
 
 import java.sql.*;
 
+import config.Configuration;
+
 public class ConnectionManager {
 
 	static Connection con;
@@ -10,16 +12,12 @@ public class ConnectionManager {
 	public static Connection getConnection() {
 
 		try {
-			String url = "jdbc:odbc:" + "DataSource";
 			// assuming "DataSource" is your DataSource name
 
-			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+			Class.forName(Configuration.driver);
 
 			try {
-				con = DriverManager.getConnection(url, "username", "password");
-
-				// assuming your SQL Server's username is "username"
-				// and password is "password"
+				con = DriverManager.getConnection(Configuration.database_url, Configuration.username, Configuration.password);
 
 			}
 
