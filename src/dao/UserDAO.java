@@ -1,4 +1,4 @@
-
+	
 package dao;
 
 import model.UserBean;
@@ -18,13 +18,10 @@ public class UserDAO {
 		String username = bean.getUsername();
 		String password = bean.getPassword();
 
-		String searchQuery = "select * from users where username='" + username + "' AND password='" + password + "'";
+		String searchQuery = "select * from Users where username='" + username + "' AND password='" + password + "'";
 
 		// "System.out.println" prints in the console; Normally used to trace the
 		// process
-		System.out.println("Your user name is " + username);
-		System.out.println("Your password is " + password);
-		System.out.println("Query: " + searchQuery);
 
 		try {
 			// connect to DB
@@ -41,8 +38,8 @@ public class UserDAO {
 
 			// if user exists set the isValid variable to true
 			else if (more) {
-				String firstName = rs.getString("FirstName");
-				String lastName = rs.getString("LastName");
+				String firstName = rs.getString("firstname");
+				String lastName = rs.getString("lastname");
 
 				System.out.println("Welcome " + firstName);
 				bean.setFirstName(firstName);

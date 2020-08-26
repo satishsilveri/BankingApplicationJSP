@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1" import="model.UserBean"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,15 +43,17 @@
 
 	<div class="col-md-4 col-md-offset-4"
 		style="margin: 0 auto; width: 70%">
+		<% UserBean currentUser = ((UserBean) (session.getAttribute("currentSessionUser")));%> 
+		<h4>Welcome <%= currentUser.getFirstName() + " " + currentUser.getLastName() %>,</h4>
 		<form action="<%=request.getContextPath()%>/cashtransaction"
 			method="post">
 			<div class="form-group">
 				<label for="accountnumber">Account Number</label> <input type="text"
-					class="form-control" id="accountnumber">
+					class="form-control" id="accountnumber" name="accountnumber">
 			</div>
 			<div class="form-group">
 				<label for="operation">Type of transaction</label> <select
-					class="form-control" id="operation">
+					class="form-control" id="operation" name="operation">
 					<option value="" disabled selected>Select transaction type</option>
 					<option>Withdraw</option>
 					<option>Deposit</option>
@@ -59,11 +61,11 @@
 			</div>
 			<div class="form-group">
 				<label for="amount">Amount</label> <input type="text"
-					class="form-control" id="amount">
+					class="form-control" id="amount" name="amount">
 			</div>
 			<div class="form-group">
 				<label for="description">Description</label>
-				<textarea class="form-control" id="description" rows="3"></textarea>
+				<textarea class="form-control" id="description" rows="3" name="description"></textarea>
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>

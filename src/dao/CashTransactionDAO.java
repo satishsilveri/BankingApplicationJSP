@@ -2,10 +2,12 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import model.CashTransactionBean;
 import utility.ConnectionManager;
+import utility.Utility;
 
 public class CashTransactionDAO {
 
@@ -17,18 +19,11 @@ public class CashTransactionDAO {
 
 		try {
 
-			// insert transaction
-			String insertTransactionStmt = "Insert into Transactions value(" + cashBean.getAccountNumber() + ",'"
-					+ cashBean.getTransactionType() + "'," + cashBean.getAmount() + ",'" + cashBean.getDescription()
-					+ "',curdate());";
-
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
-			rs = stmt.executeQuery(insertTransactionStmt);
 
-			// update the amount in balace table
-			String getBalance = "select amount from CustomerBalance where accountNumber=" + cashBean.getAccountNumber()
-					+ ";";
+			// update the amount in balance table
+			String getBalance = "select amount from CustomerBalance where user_id=" + cashBean.getAccountNumber() + ";";
 
 			rs = stmt.executeQuery(getBalance);
 
@@ -46,14 +41,31 @@ public class CashTransactionDAO {
 				updatedBalance = currentBalance - cashBean.getAmount();
 			}
 
-			String updateBalance = "update CustomerBalance set amount=" + updatedBalance + "where accountNumber="
+			String updateBalance = "update CustomerBalance set amount=" + updatedBalance + "where user_id="
 					+ cashBean.getAccountNumber() + ";";
 
-			rs = stmt.executeQuery(updateBalance);
+			int rs1 = stmt.executeUpdate(updateBalance);
+
+			// insert transaction
+			String insertTransactionStmt = "Insert into Transactions value(" + cashBean.getAccountNumber() + ",'"
+					+ Utility.getTransctionID() + "','" + cashBean.getTransactionType() + "'," + cashBean.getAmount()
+					+ ",'success','" + cashBean.getDescription() + "',curdate());";
+
+			rs = stmt.executeQuery(insertTransactionStmt);
 
 			return true;
 
 		} catch (Exception e) {
+			String insertTransactionStmt = "Insert into Transactions value(" + cashBean.getAccountNumber() + ",'"
+					+ Utility.getTransctionID() + "','" + cashBean.getTransactionType() + "'," + cashBean.getAmount()
+					+ ",'failed','" + cashBean.getDescription() + "',curdate());";
+
+			try {
+				rs = stmt.executeQuery(insertTransactionStmt);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			return false;
 		} finally {
 
