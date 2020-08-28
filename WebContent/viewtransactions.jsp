@@ -41,6 +41,10 @@
 					placeholder="Search">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</form>
+			<form class="form-inline my-2 my-lg-0" method="link"
+				action="logout.jsp" style="margin-left:10px;">
+				<button class="btn btn-danger" type="submit">Logout</button>
+			</form>
 		</div>
 	</nav>
 

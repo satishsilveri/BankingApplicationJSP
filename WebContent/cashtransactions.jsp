@@ -38,18 +38,28 @@
 					placeholder="Search">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</form>
+			<form class="form-inline my-2 my-lg-0" method="link"
+				action="logout.jsp" style="margin-left:10px;">
+				<button class="btn btn-danger" type="submit">Logout</button>
+			</form>
 		</div>
 	</nav>
 
 	<div class="col-md-4 col-md-offset-4"
 		style="margin: 0 auto; width: 70%">
-		<% UserBean currentUser = ((UserBean) (session.getAttribute("currentSessionUser")));%> 
-		<h4>Welcome <%= currentUser.getFirstName() + " " + currentUser.getLastName() %>,</h4>
+		<%
+			UserBean currentUser = ((UserBean) (session.getAttribute("currentSessionUser")));
+		%>
+		<h4>
+			Welcome
+			<%=currentUser.getFirstName() + " " + currentUser.getLastName()%>,
+		</h4>
 		<form action="<%=request.getContextPath()%>/cashtransaction"
 			method="post">
 			<div class="form-group">
 				<label for="accountnumber">Account Number</label> <input type="text"
-					class="form-control" id="accountnumber" name="accountnumber" required>
+					class="form-control" id="accountnumber" name="accountnumber"
+					required>
 			</div>
 			<div class="form-group">
 				<label for="operation">Type of transaction</label> <select
@@ -65,7 +75,8 @@
 			</div>
 			<div class="form-group">
 				<label for="description">Description</label>
-				<textarea class="form-control" id="description" rows="3" name="description" required></textarea>
+				<textarea class="form-control" id="description" rows="3"
+					name="description" required></textarea>
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>

@@ -39,13 +39,16 @@
 					placeholder="Search">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</form>
+			<form class="form-inline my-2 my-lg-0" method="link"
+				action="logout.jsp" style="margin-left: 10px;">
+				<button class="btn btn-danger" type="submit">Logout</button>
+			</form>
 		</div>
 	</nav>
 
 	<div class="col-md-4 col-md-offset-4"
 		style="margin: 0 auto; width: 70%">
-		<form action="<%=request.getContextPath()%>/complaint"
-			method="post">
+		<form action="<%=request.getContextPath()%>/complaint" method="post">
 			<h5>We can't solve your problem if you don't tell us about it!</h5>
 			<div class="form-group">
 				<label for="name">Your Name:</label> <input type="text"
@@ -61,8 +64,7 @@
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
-		<br>
-		<br>
+		<br> <br>
 		<h6>Address:</h6>
 		<p>265 Yorkland Blvd #400,</p>
 		<p>North York,</p>
