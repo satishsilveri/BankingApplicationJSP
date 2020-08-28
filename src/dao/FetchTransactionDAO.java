@@ -47,7 +47,8 @@ public class FetchTransactionDAO {
 				transaction.setStatus(rs.getString("status"));
 				transaction.setDescription(rs.getString("description"));
 				transaction.setDateTime(String.valueOf(rs.getDate("transactiondt")));
-
+				
+				// append to final array
 				transactions.add(transaction);
 
 			}
