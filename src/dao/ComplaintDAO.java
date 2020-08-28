@@ -17,14 +17,19 @@ public class ComplaintDAO {
 
 		try {
 
-			String addComplaintStmt = "Insert into Complaints value('" + complaint.getName() + "','"
+			String addComplaintStmt = "Insert into Complaints value(null,'" + complaint.getName() + "','"
 					+ complaint.getEmail() + "','" + complaint.getMessage() + "');";
 
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
-			rs = stmt.executeQuery(addComplaintStmt);
+			int rowsAffected = stmt.executeUpdate(addComplaintStmt);
 
-			return true;
+			if (rowsAffected == 1) {
+				return true;
+			} else {
+				return false;
+			}
+
 		} catch (Exception e) {
 			return false;
 

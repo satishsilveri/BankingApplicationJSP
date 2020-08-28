@@ -53,10 +53,6 @@ public class ComplaintController extends HttpServlet {
 		complaint.setName(name);
 		complaint.setMessage(message);
 
-		System.out.println(email);
-		System.out.println(name);
-		System.out.println(message);
-
 		boolean isComplaintLogded = ComplaintDAO.addComplaint(complaint);
 		String page = "";
 

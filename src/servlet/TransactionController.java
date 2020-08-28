@@ -1,26 +1,29 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.CashTransactionDAO;
-import model.CashTransactionBean;
+import dao.FetchTransactionDAO;
+import model.TransactionBean;
 
 /**
- * Servlet implementation class CashTransaction
+ * Servlet implementation class TransactionController
  */
-@WebServlet("/cashtransaction")
-public class CashTransactionController extends HttpServlet {
+@WebServlet("/filter_transactions")
+public class TransactionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public CashTransactionController() {
+	public TransactionController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -44,27 +47,16 @@ public class CashTransactionController extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 
-		String accountNumber = request.getParameter("accountnumber");
-		String operation = request.getParameter("operation");
-		String amount = request.getParameter("amount");
-		String description = request.getParameter("description");
+		String start_date = request.getParameter("start_date");
+		String end_date = request.getParameter("end_date");
 
-		CashTransactionBean cashBean = new CashTransactionBean();
-		cashBean.setAccountNumber(Integer.parseInt(accountNumber));
-		cashBean.setAmount(Integer.parseInt(amount));
-		cashBean.setTransactionType(operation);
-		cashBean.setDescription(description);
+		ArrayList<TransactionBean> transactions = FetchTransactionDAO.getTransactions(request, start_date, end_date);
 
-		boolean isTransactionSuccessful = CashTransactionDAO.performTransactions(request,cashBean);
+		request.setAttribute("transactions", transactions);
 
-		String page = "";
-		if (isTransactionSuccessful) {
-			page = "/transactionsuccess.jsp";
-		} else {
-			page = "/transactionfailed.jsp";
-		}
+		RequestDispatcher view = request.getRequestDispatcher("viewtransactions.jsp");
+		view.forward(request, response);
 
-		this.getServletContext().getRequestDispatcher(page).forward(request, response);
 	}
 
 }

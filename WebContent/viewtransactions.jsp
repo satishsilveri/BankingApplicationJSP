@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,34 +46,48 @@
 
 	<div class="col-md-8 col-md-offset-8"
 		style="margin: 0 auto; width: 70%">
+
+		<form action="<%=request.getContextPath()%>/filter_transactions"
+			method="post" style="margin-bottom: 30px;">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4">
+						<label for="start" style="margin-right: 20px;">Start Date:
+						</label><input type="date" id="start" name="start_date" />
+					</div>
+					<div class="col-md-4">
+						<label for="end" style="margin-right: 20px;">End Date: </label><input
+							type="date" id="end" name="end_date" />
+					</div>
+					<button type="submit" class="btn btn-primary">Filter</button>
+				</div>
+			</div>
+		</form>
+
 		<table class="table">
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">Transaction ID</th>
-					<th scope="col">Amount</th>
 					<th scope="col">Transaction Type</th>
+					<th scope="col">Receiver</th>
+					<th scope="col">Amount</th>
+					<th scope="col">Status</th>
+					<th scope="col">Description</th>
 					<th scope="col">Date</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
-				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-				</tr>
-				<tr>
-					<th scope="row">3</th>
-					<td>Larry</td>
-					<td>the Bird</td>
-					<td>@twitter</td>
-				</tr>
+				<c:forEach items="${transactions}" var="transaction">
+					<tr>
+						<td>${transaction.transactionID}</td>
+						<td>${transaction.transactionType}</td>
+						<td>${transaction.toAccount}</td>
+						<td>${transaction.amount}</td>
+						<td>${transaction.status}</td>
+						<td>${transaction.description}</td>
+						<td>${transaction.dateTime}</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>

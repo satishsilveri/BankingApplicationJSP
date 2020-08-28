@@ -2,10 +2,12 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.http.HttpServletRequest;
+
 import model.CashTransactionBean;
+import model.UserBean;
 import utility.ConnectionManager;
 import utility.Utility;
 
@@ -14,7 +16,7 @@ public class CashTransactionDAO {
 	static Connection currentCon = null;
 	static ResultSet rs = null;
 
-	public static boolean performTransactions(CashTransactionBean cashBean) {
+	public static boolean performTransactions(HttpServletRequest request, CashTransactionBean cashBean) {
 		Statement stmt = null;
 
 		try {
@@ -42,24 +44,26 @@ public class CashTransactionDAO {
 
 			String updateBalance = "update CustomerBalance set amount=" + updatedBalance + " where user_id="
 					+ cashBean.getAccountNumber() + ";";
-			
 
 			int rs1 = stmt.executeUpdate(updateBalance);
 
 			String insertTransactionStmt = "";
 
+			UserBean currentUser = ((UserBean) (request.getSession().getAttribute("currentSessionUser")));
+
 			if (rs1 == 1) {
 
 				// insert transaction
-				insertTransactionStmt = "Insert into Transactions value(" + cashBean.getAccountNumber() + ",'"
+				insertTransactionStmt = "Insert into Transactions value('" + currentUser.getUsername() + "','"
 						+ Utility.getTransctionID() + "','" + cashBean.getTransactionType() + "',"
-						+ cashBean.getAmount() + ",'success','" + cashBean.getDescription() + "',curdate());";
+						+ cashBean.getAccountNumber() + "," + cashBean.getAmount() + ",'success','"
+						+ cashBean.getDescription() + "',curdate());";
 			} else {
 
-				insertTransactionStmt = "Insert into Transactions value(" + cashBean.getAccountNumber() + ",'"
+				insertTransactionStmt = "Insert into Transactions value('" + currentUser.getUsername() + "','"
 						+ Utility.getTransctionID() + "','" + cashBean.getTransactionType() + "',"
-						+ cashBean.getAmount() + ",'failed','" + cashBean.getDescription() + "',curdate());";
-
+						+ cashBean.getAccountNumber() + "," + cashBean.getAmount() + ",'failed','"
+						+ cashBean.getDescription() + "',curdate());";
 			}
 
 			int rs2 = stmt.executeUpdate(insertTransactionStmt);
