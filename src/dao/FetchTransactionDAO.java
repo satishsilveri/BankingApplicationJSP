@@ -28,7 +28,6 @@ public class FetchTransactionDAO {
 		String filterTransactionQuery = "select * from Transactions where username='" + currentUser.getUsername()
 				+ "' and transactiondt>='" + start_date + "' and transactiondt<='" + end_date + "';";
 
-		System.out.println(filterTransactionQuery);
 
 		try {
 			// connect to DB

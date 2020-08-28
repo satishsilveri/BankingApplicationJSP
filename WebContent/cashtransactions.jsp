@@ -49,11 +49,11 @@
 			method="post">
 			<div class="form-group">
 				<label for="accountnumber">Account Number</label> <input type="text"
-					class="form-control" id="accountnumber" name="accountnumber">
+					class="form-control" id="accountnumber" name="accountnumber" required>
 			</div>
 			<div class="form-group">
 				<label for="operation">Type of transaction</label> <select
-					class="form-control" id="operation" name="operation">
+					class="form-control" id="operation" name="operation" required>
 					<option value="" disabled selected>Select transaction type</option>
 					<option>Withdraw</option>
 					<option>Deposit</option>
@@ -61,11 +61,11 @@
 			</div>
 			<div class="form-group">
 				<label for="amount">Amount</label> <input type="text"
-					class="form-control" id="amount" name="amount">
+					class="form-control" id="amount" name="amount" required>
 			</div>
 			<div class="form-group">
 				<label for="description">Description</label>
-				<textarea class="form-control" id="description" rows="3" name="description"></textarea>
+				<textarea class="form-control" id="description" rows="3" name="description" required></textarea>
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>

@@ -51,7 +51,9 @@ public class TransactionController extends HttpServlet {
 		String end_date = request.getParameter("end_date");
 
 		ArrayList<TransactionBean> transactions = FetchTransactionDAO.getTransactions(request, start_date, end_date);
-
+		
+		request.setAttribute("start_date", start_date);
+		request.setAttribute("end_date", end_date);
 		request.setAttribute("transactions", transactions);
 
 		RequestDispatcher view = request.getRequestDispatcher("viewtransactions.jsp");

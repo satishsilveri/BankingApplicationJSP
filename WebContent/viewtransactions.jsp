@@ -53,11 +53,11 @@
 				<div class="row">
 					<div class="col-md-4">
 						<label for="start" style="margin-right: 20px;">Start Date:
-						</label><input type="date" id="start" name="start_date" />
+						</label><input type="date" id="start" name="start_date" value="${start_date}" required/>
 					</div>
 					<div class="col-md-4">
 						<label for="end" style="margin-right: 20px;">End Date: </label><input
-							type="date" id="end" name="end_date" />
+							type="date" id="end" name="end_date" value="${end_date}" required/>
 					</div>
 					<button type="submit" class="btn btn-primary">Filter</button>
 				</div>
